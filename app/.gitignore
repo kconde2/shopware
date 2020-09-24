@@ -1,0 +1,60 @@
+# ignore all files
+/*
+
+# do not ignore these files
+!/.gitignore
+!/.htaccess
+!/config.php
+
+# include custom plugins
+!/custom/
+/custom/*
+!/custom/plugins/
+/custom/plugins/*
+!/custom/plugins/Lenz*
+
+# include themes (exclude Bare and Responsive)
+!/themes/
+/themes/*
+!/themes/Frontend/
+/themes/Frontend/Bare/
+/themes/Frontend/Responsive/
+
+# include custom plugins
+!/engine/
+/engine/*
+!/engine/Shopware/
+/engine/Shopware/*
+!/engine/Shopware/Plugins/
+/engine/Shopware/Plugins/*
+# community plugins
+!/engine/Shopware/Plugins/Community/
+/engine/Shopware/Plugins/Community/*
+!/engine/Shopware/Plugins/Community/Core/
+/engine/Shopware/Plugins/Community/Core/*
+!/engine/Shopware/Plugins/Community/Core/Lenz*/
+!/engine/Shopware/Plugins/Community/Frontend/
+/engine/Shopware/Plugins/Community/Frontend/*
+!/engine/Shopware/Plugins/Community/Frontend/Lenz*/
+!/engine/Shopware/Plugins/Community/Backend/
+/engine/Shopware/Plugins/Community/Backend/*
+!/engine/Shopware/Plugins/Community/Backend/Lenz*/
+# local plugins
+!/engine/Shopware/Plugins/Local/
+/engine/Shopware/Plugins/Local/*
+!/engine/Shopware/Plugins/Local/Core/
+/engine/Shopware/Plugins/Local/Core/*
+!/engine/Shopware/Plugins/Local/Core/Lenz*/
+!/engine/Shopware/Plugins/Local/Frontend/
+/engine/Shopware/Plugins/Local/Frontend/*
+!/engine/Shopware/Plugins/Local/Frontend/Lenz*/
+!/engine/Shopware/Plugins/Local/Backend/
+/engine/Shopware/Plugins/Local/Backend/*
+!/engine/Shopware/Plugins/Local/Backend/Lenz*/
+
+# include custom eg /export
+!/export/
+
+# ignore system files
+**/Thumbs.db
+**/.DS_Store
