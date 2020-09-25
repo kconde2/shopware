@@ -57,6 +57,7 @@ RUN node -v; npm -v; yarn --version
 ## Install MJML
 RUN yarn global add mjml
 
-WORKDIR /var/www/symfony
+ENV SHOPWARE_ENV="dev"
+WORKDIR /var/www/shopware
 
 EXPOSE 80

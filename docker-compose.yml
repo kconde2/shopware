@@ -36,6 +36,7 @@ services:
       - ./docker/apache/apache2.conf:/etc/apache2/conf-enabled/apache2.conf:ro
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./app:/var/www/shopware:cached
+      #- shopware_var:/var/www/shopware/var # Required for next to do it's thing.
     expose:
       - 80
     labels:
@@ -91,3 +92,6 @@ services:
 networks:
   proxy:
     external: false
+
+# volumes:
+#   shopware_var: {}

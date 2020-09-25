@@ -1,10 +1,10 @@
 up:
-	docker-compose up -d
+	docker-compose up -d --build
 
 down:
 	docker-compose down
 
-cache-clear:
-	docker-compose exec apache bin/console cache:clear
+ccache:
+	docker-compose exec apache bin/console sw:cache:clear
 
 restart: down up
