@@ -60,4 +60,10 @@ RUN yarn global add mjml
 ENV SHOPWARE_ENV="dev"
 WORKDIR /var/www/shopware
 
+# Workaround for write permission on write to MacOS X volumes
+# See https://github.com/boot2docker/boot2docker/pull/534
+# RUN usermod -u 1000 www-data
+
+# RUN chown -R www-data:www-data /var/www/shopware
+
 EXPOSE 80
