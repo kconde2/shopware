@@ -12,14 +12,14 @@ stop-mutagen:
 up:
 ifeq ($(wildcard $(MutagenLock)),)
 	# $(MutagenLock) File doesn't exist
-	make start-mutagen
+	#make start-mutagen
 endif
 	docker-compose up -d --build
 
 down:
 ifneq ($(wildcard $(MutagenLock)),)
 	# $(MutagenLock) File exist
-	make stop-mutagen
+	#make stop-mutagen
 endif
 	docker-compose down --remove-orphans
 

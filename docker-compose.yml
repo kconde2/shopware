@@ -35,9 +35,10 @@ services:
         volumes:
             - ./docker/apache/apache2.conf:/etc/apache2/conf-enabled/apache2.conf:ro
             - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-            #- ./app:/var/www/html:cached
+            - ./app:/var/www/html:delegated
             ## Alternative for macOS users: mutagen https://wodby.com/docs/stacks/php/local#docker-for-mac
-            - mutagen:/var/www/html
+            #- ./app:/var/www/html:delegated
+            #- mutagen:/var/www/html
         expose:
             - 80
         labels:
@@ -100,20 +101,20 @@ services:
         labels:
             - "traefik.http.routers.portainer.rule=Host(`portainer.${PROJECT_BASE_URL}`)"
 
-    mutagen:
-        build:
-            context: .
-            dockerfile: docker/mutagen/Dockerfile
-        init: true
-        container_name: "mutagen"
-        volumes:
-            - mutagen:/var/www/html
+    # mutagen:
+    #     build:
+    #         context: .
+    #         dockerfile: docker/mutagen/Dockerfile
+    #     init: true
+    #     container_name: "mutagen"
+    #     volumes:
+    #         - mutagen:/var/www/html
 
 networks:
     proxy:
         external: false
 
-volumes:
-    # Mutagen for macOS users
-    mutagen:
+# volumes:
+#     # Mutagen for macOS users
+#     mutagen:
 # brew install mutagen-io/mutagen/mutagen
