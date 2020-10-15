@@ -1,3 +1,15 @@
+# Set up the Docker Compose services before creating sessions.
+beforeCreate:
+  - docker-compose up --build --detach
+
+# Tear down the Docker Compose services after terminating sessions.
+afterTerminate:
+  - docker-compose down --rmi=local --volumes
+
+# Define common utility commands.
+commands:
+  ipython: docker-compose exec jupyter ipython
+
 sync:
     defaults:
       ignore:
@@ -7,7 +19,7 @@ sync:
           - .history
           - .idea
     mutagen:
-      alpha: "./app"
+      alpha: "app"
       beta: "docker://mutagen/var/www/html"
       mode: "two-way-resolved"
       configurationBeta:
