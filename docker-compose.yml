@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     traefik:
-        image: "traefik:v2.2.5"
+        image: "traefik:v2.3"
         container_name: "${PROJECT_NAME}_traefik"
         command:
             - "--log.level=DEBUG"
@@ -26,10 +26,10 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
     apache:
+        container_name: ${PROJECT_NAME}_apache
         build:
             context: ./docker/apache
             dockerfile: Dockerfile
-        container_name: ${PROJECT_NAME}_apache
         networks:
             - proxy
         volumes:
@@ -47,17 +47,18 @@ services:
 
     # MySQL
     mysql:
-        image: mysql:5.7
+        image: mysql:${MYSQL_VERSION}
         container_name: ${PROJECT_NAME}_mysql
+        command: --default-authentication-plugin=mysql_native_password
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
         networks:
             - proxy
         environment:
-            MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
-            MYSQL_DATABASE: $DB_DATABASE
-            MYSQL_USER: $DB_USERNAME
-            MYSQL_PASSWORD: $DB_PASSWORD
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
     # phpMyAdmin
     phpmyadmin:

@@ -58,12 +58,20 @@ RUN node -v; npm -v; yarn --version
 RUN yarn global add mjml
 
 ENV SHOPWARE_ENV="dev"
-WORKDIR /var/www/shopware
+WORKDIR /var/www/html
 
 # Workaround for write permission on write to MacOS X volumes
 # See https://github.com/boot2docker/boot2docker/pull/534
-# RUN usermod -u 1000 www-data
+# RUN groupadd -g ${GROUPID} ${USERID} && useradd -u ${uid} -g ${group} -s /bin/sh ${USER}
+# RUN usermod -u ${USERID} -g ${GROUPID} -s /bin/bash ${USER}
 
-# RUN chown -R www-data:www-data /var/www/shopware
+# Add a non-root user to prevent files being created with root permissions on host machine.
+ARG PUID=1000
+ENV PUID ${PUID}
+ARG PGID=1000
+ENV PGID ${PGID}
+
+RUN groupmod -o -g ${PGID} www-data && \
+    usermod -o -u ${PUID} -g www-data www-data
 
 EXPOSE 80

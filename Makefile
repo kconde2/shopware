@@ -1,21 +1,28 @@
+init:
+	cp .env.example .env
+
 up:
+    ifeq ("$(wildcard $('./mutagen.yml.lock'))","")
 	make mutagen
+    endif
 	docker-compose up -d --build
 
 down:
-	docker-compose down
+    ifeq ("$(wildcard $('./mutagen.yml.lock'))","")
 	mutagen project terminate -f mutagen.yml
+    endif
+	docker-compose down --remove-orphans
+
 
 ccache:
 	docker-compose exec apache bin/console sw:cache:clear
 
 bash:
 	docker-compose exec apache bash
+bash:
+
 ll:
 	docker-compose exec apache ls -la
-kl:
-	docker-compose exec apache ls -la
-    docker volume create --name=shopware-sync
 
 restart: down up
 

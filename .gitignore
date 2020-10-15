@@ -1,2 +1,4 @@
 docker/mysql
 mutagen.yml.lock
+app/*
+!app/index.php
