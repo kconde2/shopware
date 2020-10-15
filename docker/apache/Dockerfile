@@ -60,11 +60,6 @@ RUN yarn global add mjml
 ENV SHOPWARE_ENV="dev"
 WORKDIR /var/www/html
 
-# Workaround for write permission on write to MacOS X volumes
-# See https://github.com/boot2docker/boot2docker/pull/534
-# RUN groupadd -g ${GROUPID} ${USERID} && useradd -u ${uid} -g ${group} -s /bin/sh ${USER}
-# RUN usermod -u ${USERID} -g ${GROUPID} -s /bin/bash ${USER}
-
 # Add a non-root user to prevent files being created with root permissions on host machine.
 ARG PUID=1000
 ENV PUID ${PUID}
