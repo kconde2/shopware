@@ -20,7 +20,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.traefik.entrypoints=web"
-            - "traefik.http.routers.traefik.rule=Host(`monitor.$DOMAIN_NAME`)"
+            - "traefik.http.routers.traefik.rule=Host(`monitor.$PROJECT_BASE_URL`)"
             - "traefik.http.services.traefik.loadbalancer.server.port=8080"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -35,14 +35,14 @@ services:
         volumes:
             - ./docker/apache/apache2.conf:/etc/apache2/conf-enabled/apache2.conf:ro
             - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-            #- ./app:/var/www/shopware:cached
-            ## Alternative for macOS users: shopware-mutagen https://wodby.com/docs/stacks/php/local#docker-for-mac
-            - shopware-mutagen:/var/www/html
+            #- ./app:/var/www/html:cached
+            ## Alternative for macOS users: mutagen https://wodby.com/docs/stacks/php/local#docker-for-mac
+            - mutagen:/var/www/html
         expose:
             - 80
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.apache.rule=Host(`shopware.$DOMAIN_NAME`)"
+            - "traefik.http.routers.apache.rule=Host(`shopware.$PROJECT_BASE_URL`)"
             - "traefik.http.routers.apache.entrypoints=web"
 
     # MySQL
@@ -74,7 +74,7 @@ services:
             - 80
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.pma.rule=Host(`pma.$DOMAIN_NAME`)"
+            - "traefik.http.routers.pma.rule=Host(`pma.$PROJECT_BASE_URL`)"
             - "traefik.http.routers.pma.entrypoints=web"
         environment:
             PMA_HOST: mysql
@@ -87,18 +87,27 @@ services:
             - proxy
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.maildev.rule=Host(`mail.$DOMAIN_NAME`)"
+            - "traefik.http.routers.maildev.rule=Host(`mail.$PROJECT_BASE_URL`)"
             - "traefik.http.services.maildev.loadbalancer.server.port=80"
             - "traefik.http.routers.maildev.entrypoints=web"
+
+    portainer:
+        image: portainer/portainer
+        container_name: "${PROJECT_NAME}_portainer"
+        command: --no-auth -H unix:///var/run/docker.sock
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        labels:
+            - "traefik.http.routers.portainer.rule=Host(`portainer.${PROJECT_BASE_URL}`)"
 
     mutagen:
         build:
             context: .
             dockerfile: docker/mutagen/Dockerfile
         init: true
-        container_name: "shopware-mutagen"
+        container_name: "mutagen"
         volumes:
-            - shopware-mutagen:/var/www/html
+            - mutagen:/var/www/html
 
 networks:
     proxy:
@@ -106,6 +115,5 @@ networks:
 
 volumes:
     # Mutagen for macOS users
-    shopware-mutagen:
-
+    mutagen:
 # brew install mutagen-io/mutagen/mutagen

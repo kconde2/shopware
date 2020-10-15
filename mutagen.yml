@@ -8,7 +8,7 @@ sync:
           - .idea
     mutagen:
       alpha: "./app"
-      beta: "docker://shopware-mutagen/var/www/html"
+      beta: "docker://mutagen/var/www/html"
       mode: "two-way-resolved"
       configurationBeta:
         permissions:
@@ -16,11 +16,9 @@ sync:
           defaultDirectoryMode: 755
         #   defaultOwner: "root"
         #   defaultGroup: "root"
-      # # Example of optimisation (not required by default)
-      # ignore:
-      #   paths:
-      #     - "/vendor/"
-      #     - "/web/core/"
-      #     - "/web/modules/contrib/"
-      #     - "/web/themes/contrib/"
-      #     - "/web/sites/*/files/"
+      # Example of optimisation (not required by default)
+      ignore:
+        paths:
+            - "mutagen.yml"
+            - "mutagen.yml.lock"
+            - ".vagrant"
