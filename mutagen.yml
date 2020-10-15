@@ -14,8 +14,8 @@ sync:
         permissions:
           defaultFileMode: 644
           defaultDirectoryMode: 755
-          defaultOwner: "root"
-          defaultGroup: "root"
+        #   defaultOwner: "root"
+        #   defaultGroup: "root"
       # # Example of optimisation (not required by default)
       # ignore:
       #   paths:
